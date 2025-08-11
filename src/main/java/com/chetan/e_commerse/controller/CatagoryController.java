@@ -19,7 +19,11 @@ import com.chetan.e_commerse.dto.CatagoryDto;
 import com.chetan.e_commerse.exception.ResourceAlreadyExists;
 import com.chetan.e_commerse.service.CatagoryService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(
+		name="Catagory REST API Service",
+		description="CREATE,READ,DELETE AND UPDATE REST API ")
 
 @RestController
 @RequestMapping("/api/catagory")
