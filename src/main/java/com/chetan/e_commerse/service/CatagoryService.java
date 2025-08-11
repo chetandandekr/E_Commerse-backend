@@ -1,6 +1,7 @@
 package com.chetan.e_commerse.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.chetan.e_commerse.dto.CatagoryDto;
 import com.chetan.e_commerse.entity.Catagory;
+import com.chetan.e_commerse.exception.ResourceAlreadyExists;
 import com.chetan.e_commerse.mapper.CatagoryMapper;
 import com.chetan.e_commerse.reposietry.CatagoryRepositery;
 
@@ -20,6 +22,10 @@ public class CatagoryService {
 	private CatagoryRepositery catagoryRepositery;
 	
 	public CatagoryDto createCatagory(CatagoryDto catagoryDto) {
+		      Optional<Catagory> existingCatagory=catagoryRepositery.findByName(catagoryDto.getName());
+		      if (existingCatagory.isPresent()) {
+				throw new ResourceAlreadyExists("Already Exits! "+ catagoryDto.getName());
+			}
 		Catagory catagory=CatagoryMapper.toCtagoryEntity(catagoryDto);
 		catagory=catagoryRepositery.save(catagory);
 		return CatagoryMapper.toCatagoryDto(catagory);

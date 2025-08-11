@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chetan.e_commerse.dto.CatagoryDto;
+import com.chetan.e_commerse.exception.ResourceAlreadyExists;
 import com.chetan.e_commerse.service.CatagoryService;
 
 
@@ -38,8 +39,20 @@ public class CatagoryController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<CatagoryDto> createCatagory(@RequestBody CatagoryDto catagoryDto) {
-		return new ResponseEntity<> (catagoryService.createCatagory(catagoryDto),HttpStatus.CREATED);
+	public ResponseEntity<?> createCatagory(@RequestBody CatagoryDto catagoryDto) {
+		
+		//if we  have the global exception we dont have to handle by try catch in  controller class.
+		
+//		try {
+//			CatagoryDto savecatagory= catagoryService.createCatagory(catagoryDto);
+//			return ResponseEntity.status(HttpStatus.CREATED).body(savecatagory);
+//		} catch (ResourceAlreadyExists e) {
+//			// TODO: handle exception
+//			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+//		}
+	
+		CatagoryDto savecatagory= catagoryService.createCatagory(catagoryDto);
+      	return ResponseEntity.status(HttpStatus.CREATED).body(savecatagory);
 	}
 	
 //	@PutMapping("/update")
