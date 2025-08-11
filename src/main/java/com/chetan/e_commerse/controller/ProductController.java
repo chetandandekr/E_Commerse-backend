@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chetan.e_commerse.dto.ProductDto;
 import com.chetan.e_commerse.service.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(
+		name="Product REST API Service",
+		description="CREATE,READ,DELETE AND UPDATE REST API ")
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
@@ -23,6 +29,9 @@ public class ProductController {
 	@Autowired
 	private ProductService  productSrvice;
 	
+	@Operation(
+			summary="Creating new product",
+			description ="Create New product and return exciting product")
 	@PostMapping("/create")
 	public ResponseEntity<ProductDto>  createProduct(@RequestBody ProductDto productDto) {
 		return new ResponseEntity<>( productSrvice.createProduct(productDto),HttpStatus.CREATED);
