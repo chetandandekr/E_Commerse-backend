@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.chetan.e_commerse.dto.ProductDto;
 import com.chetan.e_commerse.entity.Catagory;
 import com.chetan.e_commerse.entity.Product;
+import com.chetan.e_commerse.exception.CatagoryNotFoundException;
 import com.chetan.e_commerse.mapper.ProductMapper;
 import com.chetan.e_commerse.reposietry.CatagoryRepositery;
 import com.chetan.e_commerse.reposietry.ProductRepositery;
@@ -25,7 +26,7 @@ public class ProductService {
 	
 	public ProductDto createProduct(ProductDto productDto) {
 		Catagory catagory = catagoryRepositery.findById(productDto.getCatagoryId())
-				.orElseThrow(() -> new RuntimeException("catagory not found"));
+				.orElseThrow(() -> new CatagoryNotFoundException("catagory not found"));
 		Product product = ProductMapper.toEntityProduct(productDto, catagory);
 
 		product = productRepositery.save(product);
